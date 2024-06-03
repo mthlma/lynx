@@ -26,7 +26,7 @@ bot.on('message', (msg) => {
       console.log(`WARN: Blocked user ${userName}, ${userId} tried to access the bot with the command or message "${messageText}".\n`);
       return;
     }
-    console.log(`INFO: User ${userName}, ${userId} sended a command or message with the content:
+    console.log(`INFO: User ${userName}, ${userId} sent a command or message with the content:
     • ${messageText}\n`)
   }
 
