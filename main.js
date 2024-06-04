@@ -14,7 +14,15 @@ const commandHandlers = {};
 
 fs.readdirSync(commandsPath).forEach(file => {
   const command = `/${path.parse(file).name}`;
-  const handler = require(path.join(commandsPath, file));
+  let handler;
+  const commandsRequiringBot = ['customize'];
+  
+  if (commandsRequiringBot.includes(path.parse(file).name)) {
+    handler = require(path.join(commandsPath, file))(bot); // Passa a instância do bot
+  } else {
+    handler = require(path.join(commandsPath, file));
+  }
+  
   commandHandlers[command] = handler;
 });
 
@@ -23,9 +31,6 @@ for (const [command, handler] of Object.entries(commandHandlers)) {
 }
 
 //bot.start((ctx) => ctx.reply('Teste')); -> funciona
-bot.command('furry', (ctx)=>{
-  ctx.reply('TesteFurry')
-})
 
 bot.on('message', (ctx) => {
   const userName = ctx.from.first_name;
