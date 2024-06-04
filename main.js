@@ -1,8 +1,10 @@
 const TelegramBot = require('node-telegram-bot-api');
+const { Telegraf } = require('telegraf')
 const fs = require('fs');
 const path = require('path');
 const token = process.env.TGBOT_TOKEN;
-const bot = new TelegramBot(token, { polling: true });
+
+const bot = new Telegraf(token, { polling: true });
 const { isBlocked } = require('./blocklist');
 const { isOnSpamWatch } = require('./spamwatch');
 require('./logger');
@@ -16,12 +18,12 @@ fs.readdirSync(commandsPath).forEach(file => {
   commandHandlers[command] = handler;
 });
 
-bot.on('message', (msg) => {
-  const userName = msg.from.first_name;
-  const userId = msg.from.id;
-  const messageText = msg.text;
+bot.on('message', (ctx) => {
+  const userName = ctx.from.first_name;
+  const userId = ctx.from.id;
+  const messageText = ctx.text;
 
-  if (msg.chat.type == 'private') {
+  if (ctx.chat.type == 'private') {
     if (isBlocked(userId) || isOnSpamWatch(userId)) {
       console.log(`WARN: Blocked user ${userName}, ${userId} tried to access the bot with the command or message "${messageText}".\n`);
       return;
@@ -31,7 +33,7 @@ bot.on('message', (msg) => {
   }
 
   if (commandHandlers[messageText]) {
-    commandHandlers[messageText](bot, msg);
+    commandHandlers[messageText](bot, (ctx));
   }
 });
 
