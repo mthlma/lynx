@@ -1,5 +1,5 @@
-module.exports = function(bot, msg) {
-	const chatId = msg.chat.id;
+module.exports = (ctx) => {
+	const chatId = ctx.chat.id;
 
 	const message = `*Privacy Policy for Lynx Telegram Bot (@LynxBR_bot)*\n` + 
 	`Before using, you will need to read the privacy policy ` +
@@ -39,6 +39,6 @@ module.exports = function(bot, msg) {
 	`*8. Immediate Cancellation of Terms*\n` +
 	`In case of usage block, as mentioned above, the terms will be immediately cancelled for the user.`;
 
-	bot.sendMessage(chatId, message, { parse_mode: 'Markdown', disable_web_page_preview: true })
+	ctx.telegram.sendMessage(chatId, message, { parse_mode: 'Markdown', disable_web_page_preview: true })
 		.catch(error => console.error('WARN: Message cannot be sent: ', error));
 };

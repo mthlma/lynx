@@ -1,8 +1,8 @@
-module.exports = function(bot, msg) {
-  const chatId = msg.chat.id;
+module.exports = (ctx) => {
+  const chatId = ctx.chat.id;
 
-  const message = `O usuario foi bamido com sucesso`;
+  const message = `User was bammed with success!`;
   
-  bot.sendMessage(chatId, message, { parse_mode: 'Markdown' })
+  ctx.telegram.sendMessage(chatId, message, { parse_mode: 'Markdown' })
     .catch(error => console.error('WARN: Message cannot be sent: ', error));
 }

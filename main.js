@@ -18,6 +18,15 @@ fs.readdirSync(commandsPath).forEach(file => {
   commandHandlers[command] = handler;
 });
 
+for (const [command, handler] of Object.entries(commandHandlers)) {
+  bot.command(command.slice(1), handler);
+}
+
+//bot.start((ctx) => ctx.reply('Teste')); -> funciona
+bot.command('furry', (ctx)=>{
+  ctx.reply('TesteFurry')
+})
+
 bot.on('message', (ctx) => {
   const userName = ctx.from.first_name;
   const userId = ctx.from.id;
@@ -40,5 +49,5 @@ bot.on('message', (ctx) => {
 bot.on('polling_error', (error) => {
   console.error('WARN: Polling error:', error);
 });
-
+bot.launch();
 console.log(`INFO: Lynx started\n`);

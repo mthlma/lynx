@@ -1,7 +1,7 @@
 const os = require('os');
 
-module.exports = function (bot, msg) {
-  const chatId = msg.chat.id;
+module.exports = (ctx) => {
+  const chatId = ctx.chat.id;
   const botAdmin = process.env.TGBOT_ADMINS;
 
   function formatUptime(uptime) {
@@ -44,9 +44,9 @@ module.exports = function (bot, msg) {
 
   const message = getSystemInfo();
 
-  const isAdmin = botAdmin.includes(msg.from.id.toString());
+  const isAdmin = botAdmin.includes(ctx.from.id.toString());
   if (isAdmin) {
-    bot.sendMessage(chatId, message, { parse_mode: 'Markdown' })
+    ctx.telegram.sendMessage(chatId, message, { parse_mode: 'Markdown' })
       .catch(error => console.error('WARN: Message cannot be sent: ', error));
   } else {
     return;

@@ -1,8 +1,8 @@
-module.exports = function(bot, msg) {
-  const chatId = msg.chat.id;
-  const chatName = msg.chat.title;
-  const chatHandle = msg.chat.username;
-  const isForum = msg.chat.is_forum;
+module.exports = (ctx) => {
+  const chatId = ctx.chat.id;
+  const chatName = ctx.chat.title;
+  const chatHandle = ctx.chat.username;
+  const isForum = ctx.chat.is_forum;
   let chatNameOutput = "";
   let chatHandleOutput = "";
   let isForumOutput = "";
@@ -28,6 +28,6 @@ module.exports = function(bot, msg) {
   
   const message = chatNameOutput;
 
-  bot.sendMessage(chatId, message, { parse_mode: 'Markdown' })
+  ctx.telegram.sendMessage(chatId, message, { parse_mode: 'Markdown' })
     .catch(error => console.error('WARN: Message cannot be sent: ', error));
 }

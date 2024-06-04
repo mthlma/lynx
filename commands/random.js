@@ -1,5 +1,5 @@
-module.exports = function(bot, msg) {
-  const chatId = msg.chat.id;
+module.exports = (ctx) => {
+  const chatId = ctx.chat.id;
 
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -9,7 +9,7 @@ module.exports = function(bot, msg) {
 
   const message = `*Generated value:* \`${randomValue}\``;
 
-  bot.sendMessage(chatId, message, { parse_mode: 'Markdown' })
+  ctx.telegram.sendMessage(chatId, message, { parse_mode: 'Markdown' })
     .catch(error => console.error('WARN: Message cannot be sent: ', error));
   }
   

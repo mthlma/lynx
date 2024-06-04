@@ -1,6 +1,6 @@
-module.exports = function(bot, msg) {
-  const chatId = msg.chat.id;
-  const userName = msg.from.first_name;
+module.exports = (ctx) => {
+  const chatId = ctx.chat.id;
+  const userName = ctx.from.first_name;
   let isFurry = "";
 
   function getRandomInt(max) {
@@ -17,6 +17,6 @@ module.exports = function(bot, msg) {
 
   const message = `${isFurry}`;
   
-  bot.sendMessage(chatId, message, { parse_mode: 'Markdown' })
+  ctx.telegram.sendMessage(chatId, message, { parse_mode: 'Markdown' })
     .catch(error => console.error('WARN: Message cannot be sent: ', error));
 }
