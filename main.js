@@ -32,25 +32,6 @@ for (const [command, handler] of Object.entries(commandHandlers)) {
 
 //bot.start((ctx) => ctx.reply('Teste')); -> funciona
 
-bot.on('message', (ctx) => {
-  const userName = ctx.from.first_name;
-  const userId = ctx.from.id;
-  const messageText = ctx.text;
-
-  if (ctx.chat.type == 'private') {
-    if (isBlocked(userId) || isOnSpamWatch(userId)) {
-      console.log(`WARN: Blocked user ${userName}, ${userId} tried to access the bot with the command or message "${messageText}".\n`);
-      return;
-    }
-    console.log(`INFO: User ${userName}, ${userId} sent a command or message with the content:
-    • ${messageText}\n`)
-  }
-
-  if (commandHandlers[messageText]) {
-    commandHandlers[messageText](bot, (ctx));
-  }
-});
-
 bot.on('polling_error', (error) => {
   console.error('WARN: Polling error:', error);
 });
